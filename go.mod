@@ -1,6 +1,6 @@
 module github.com/Gxrjan/packer-plugin-gcloud
 
-go 1.23
+go 1.21
 
 require (
 	github.com/hashicorp/hcl/v2 v2.19.1
@@ -56,4 +56,5 @@ require (
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
+	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
