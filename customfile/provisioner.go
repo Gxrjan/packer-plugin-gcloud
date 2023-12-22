@@ -278,6 +278,12 @@ func (p *Provisioner) ProvisionUpload(ui packersdk.Ui, comm packersdk.Communicat
 			ui.Error(fmt.Sprintf("Upload failed: %s", err))
 			return err
 		}
+
+		if p.config.Chmod != "" {
+			ctx := context.TODO()
+			cmd := &packersdk.RemoteCmd{Command: "chmod 777"}
+			comm.Start(ctx, cmd)
+		}
 	}
 	return nil
 }
