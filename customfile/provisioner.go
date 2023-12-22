@@ -10,6 +10,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/hcl/v2/hcldec"
@@ -123,10 +124,17 @@ func (p *Provisioner) Prepare(raws ...interface{}) error {
 	}
 
 	if p.config.Chmod != "" {
+		var mode_regexp = regexp.MustCompile("[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+")
 		if len(p.config.Chmod) != 3 {
 			errs = packersdk.MultiErrorAppend(errs,
 				errors.New("Chmod string must be 3 characters long"))
 		}
+
+		if mode_regexp.MatchString(p.config.Chmod) {
+			errs = packersdk.MultiErrorAppend(errs,
+				errors.New("Chmod string doesn't match the required format"))
+		}
+
 	}
 
 	if errs != nil && len(errs.Errors) > 0 {
